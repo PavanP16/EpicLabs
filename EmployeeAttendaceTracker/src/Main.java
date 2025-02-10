@@ -59,12 +59,13 @@ class Employee{
         int presentCount = 0;
         int absentCount = 0;
         for (String status : attendanceList) {
-            if (status.contains("Present")) {
+            if(status.equals("Present")){
                 presentCount++;
-            } if (status.contains("Absent")) {
+            }else{
                 absentCount++;
             }
         }
+
         StringBuilder report = new StringBuilder();
 
         report.append("Attendance Report :- \n");
@@ -97,57 +98,65 @@ class AttendanceTracker{
         int val = 0;
         Scanner sc = new Scanner(System.in);
 
-        do{
-            Employee.line();
-            System.out.println("1.Add Employees");
-            System.out.println("2.Print the Employees");
-            System.out.println("3.Generate Attendance Report");
-            System.out.println("4.Exit");
-            System.out.print("Enter your choice :- ");
-            val = sc.nextInt();
-            Employee.line();
+        try {
+            do{
+                Employee.line();
+                System.out.println("1.Add Employees");
+                System.out.println("2.Print the Employees");
+                System.out.println("3.Generate Attendance Report");
+                System.out.println("4.Exit");
+                System.out.print("Enter your choice :- ");
+                val = sc.nextInt();
+                Employee.line();
+    
+                switch (val){
+    
+                    case 1:
+                        System.out.println("Choice 1 :- ");
+                        System.out.print("Enter the number of Employees you want to add :- ");
+                        int n = sc.nextInt();
+                        for (int i = 0; i < n; i++) {
+                            System.out.print("Enter the Employee " + (i + 1)+ " id :- ");
+                            int id = sc.nextInt();
+                            sc.nextLine();
+                            System.out.print("Enter the Employee " + (i + 1)+ " name :- ");
+                            String name = sc.nextLine();
+                            System.out.print("Enter the Employee " + (i + 1)+ " status (Present / Absent) :- ");
+                            String status = sc.nextLine();
+                            new Employee(id,name,status);
+                        }
+                        break;
+    
+                    case 2:
+                        System.out.println("Choice 2 :- ");
+                        Employee.printEmployees();
+                        break;
+    
+                    case 3:
+                        System.out.println("Choice 3 :- ");
+                        System.out.println(Employee.generateAttendanceReport(Employee.AttendanceList));
+                        break;
+    
+                    case 4:
+                        System.out.println("Exit...");
+                        break;
+    
+                    default:
+                        System.out.println("Enter a valid option listed from the list above...");
+                        break;
+    
+                }
+    
+            }while (val != 4);
+    
+    
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Enter a valid option listed from the list above...");
+        }
 
-            switch (val){
-
-                case 1:
-                    System.out.println("Choice 1 :- ");
-                    System.out.print("Enter the number of Employees you want to add :- ");
-                    int n = sc.nextInt();
-                    for (int i = 0; i < n; i++) {
-                        System.out.print("Enter the Employee " + (i + 1)+ " id :- ");
-                        int id = sc.nextInt();
-                        sc.nextLine();
-                        System.out.print("Enter the Employee " + (i + 1)+ " name :- ");
-                        String name = sc.nextLine();
-                        System.out.print("Enter the Employee " + (i + 1)+ " status (Present / Absent) :- ");
-                        String status = sc.nextLine();
-                        new Employee(id,name,status);
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("Choice 2 :- ");
-                    Employee.printEmployees();
-                    break;
-
-                case 3:
-                    System.out.println("Choice 3 :- ");
-                    System.out.println(Employee.generateAttendanceReport(Employee.AttendanceList));
-                    break;
-
-                case 4:
-                    System.out.println("Exit...");
-                    break;
-
-                default:
-                    System.out.println("Enter a valid option listed from the list above...");
-                    break;
-
-            }
-
-        }while (val != 4);
-
-
+      
         sc.close();
 
     }

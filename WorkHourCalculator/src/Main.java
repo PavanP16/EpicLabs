@@ -71,6 +71,19 @@ class Employee{
         return totalHours * hourlyRate;
     }
 
+    public String doubleToString(double value){
+        return String.valueOf(value);
+    }
+
+
+    public String generatePayStub(Double totalHours, Double hourlyRate) {
+        String name = this.employeeName;
+        //Use string builder
+        StringBuilder sb = new StringBuilder();
+        return sb.append("Employee Name: ").append(name.substring(0,1).toUpperCase()).append(name.substring(1).toLowerCase()).append("\nTotal Hours: ").append(totalHours).append("\nHourly Rate: ").append(hourlyRate).append("\nWeekly Pay: ").append(totalHours * hourlyRate).toString();
+    }
+
+
 
     static public void line(){
         System.out.println("-------------------------------------------------");
@@ -90,9 +103,9 @@ public class Main {
             Employee.line();
             System.out.println("1.Add Employees");
             System.out.println("2.Check your 'Total Hours' in the week");
-            System.out.println("2.Check your 'Weekly Pay' in the week");
-            System.out.println("3.Generate Attendance Report");
-            System.out.println("4.Exit");
+            System.out.println("3.Check your 'Weekly Pay' in the week");
+            System.out.println("4.Generate Attendance Report");
+            System.out.println("5.Exit");
             System.out.print("Enter your choice :- ");
             val = sc.nextInt();
             Employee.line();
@@ -149,8 +162,19 @@ public class Main {
                     System.out.println("Your weekly pay is " + e.calculateWeeklyPay(totalHours,e.getHourlyRate()));
                     break;
 
-
                 case 4:
+                    System.out.println("Choice 4 :- ");
+                    System.out.print("Enter your id to generate the pay stub :- ");
+                    int emp_id = sc.nextInt();
+                    Employee employee = Employee.getEmployeesList().get(emp_id);
+                    if(employee == null){
+                        System.out.println("Employee not found....");
+                        break;
+                    }
+                    double total_Hours = employee.calculateTotalHours(employee.getWorkedHours());
+                    System.out.println(employee.generatePayStub(total_Hours,employee.getHourlyRate()));
+                    break;
+                case 5:
                     System.out.println("Exit...");
                     break;
 
@@ -160,6 +184,6 @@ public class Main {
 
             }
 
-        }while (val != 4);
+        }while (val != 5);
     }
 }
