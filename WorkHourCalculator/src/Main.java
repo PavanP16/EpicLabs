@@ -78,7 +78,7 @@ class Employee{
 
 }
 
-public class WorkHourCalculator {
+public class Main {
 
     public static void main(String[] args) {
         System.out.println("*********** Work Hour Calculator Tracking System for UKG ***********");
@@ -151,16 +151,7 @@ public class WorkHourCalculator {
 
 
                 case 4:
-                    System.out.println("Choice 4 :- ");
-                    System.out.print("Enter your id to check your weekly pay :- ");
-                    int emId = sc.nextInt();
-                    Employee em = Employee.getEmployeesList().get(emId);
-                    if(em == null){
-                        System.out.println("Employee not found....");
-                        break;
-                    }
-                    double totalHoursEm = em.calculateTotalHours(em.getWorkedHours());
-                    System.out.println("Your weekly pay is " + em.calculateWeeklyPay(totalHoursEm,em.getHourlyRate()));
+                    System.out.println("Exit...");
                     break;
 
                 default:
