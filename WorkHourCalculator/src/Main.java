@@ -71,6 +71,19 @@ class Employee{
         return totalHours * hourlyRate;
     }
 
+    public String doubleToString(double value){
+        return String.valueOf(value);
+    }
+
+
+    public String generatePayStub(Double totalHours, Double hourlyRate) {
+        String name = this.employeeName;
+        //Use string builder
+        StringBuilder sb = new StringBuilder();
+        return sb.append("Employee Name: ").append(name.substring(0,1).toUpperCase()).append(name.substring(1).toLowerCase()).append("\nTotal Hours: ").append(totalHours).append("\nHourly Rate: ").append(hourlyRate).append("\nWeekly Pay: ").append(totalHours * hourlyRate).toString();
+    }
+
+
 
     static public void line(){
         System.out.println("-------------------------------------------------");
