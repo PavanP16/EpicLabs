@@ -2,14 +2,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-class Employee{
+class Employee {
 
     private int employeeId;
     private String employeeName;
     private Double hourlyRate;
-    private ArrayList<Double> workedHours= new ArrayList<>();
-    private static HashMap<Integer,Employee> EmployeesList = new HashMap<>();
-
+    private ArrayList<Double> workedHours = new ArrayList<>();
+    private static HashMap<Integer, Employee> EmployeesList = new HashMap<>();
 
     public int getEmployeeId() {
         return employeeId;
@@ -56,12 +55,12 @@ class Employee{
         this.employeeName = name;
         this.hourlyRate = hourlyRate;
         this.workedHours = workedHours;
-        EmployeesList.put(id,this);
+        EmployeesList.put(id, this);
     }
 
     public Double calculateTotalHours(ArrayList<Double> workedHours) {
         double totalHours = 0;
-        for (double hours : workedHours){
+        for (double hours : workedHours) {
             totalHours += hours;
         }
         return totalHours;
@@ -71,21 +70,23 @@ class Employee{
         return totalHours * hourlyRate;
     }
 
-    public String doubleToString(double value){
+    public String doubleToString(double value) {
         return String.valueOf(value);
     }
 
-
-    public String generatePayStub(Double totalHours, Double hourlyRate) {
-        String name = this.employeeName;
-        //Use string builder
+    public String generatePayStub(Employee emp, Double totalHours, Double hourlyRate) {
+        // Use string builder
         StringBuilder sb = new StringBuilder();
-        return sb.append("Employee Name: ").append(name.substring(0,1).toUpperCase()).append(name.substring(1).toLowerCase()).append("\nTotal Hours: ").append(totalHours).append("\nHourly Rate: ").append(hourlyRate).append("\nWeekly Pay: ").append(totalHours * hourlyRate).toString();
+        return sb.append("Employee Name: ").append(emp.employeeName.substring(0, 1).toUpperCase())
+                .append(emp.employeeName.substring(1).toLowerCase()).append("\nTotal Hours: ").append(totalHours)
+                .append("\nHourly Rate: ").append(hourlyRate).append("\nWeekly Pay: ").append(totalHours * hourlyRate)
+                .toString();
+
+        // Also include the id of the employee
+
     }
 
-
-
-    static public void line(){
+    static public void line() {
         System.out.println("-------------------------------------------------");
     }
 
@@ -99,7 +100,7 @@ public class Main {
         int val = 0;
         Scanner sc = new Scanner(System.in);
 
-        do{
+        do {
             Employee.line();
             System.out.println("1.Add Employees");
             System.out.println("2.Check your 'Total Hours' in the week");
@@ -110,29 +111,29 @@ public class Main {
             val = sc.nextInt();
             Employee.line();
 
-            switch (val){
+            switch (val) {
 
                 case 1:
                     System.out.println("Choice 1 :- ");
                     System.out.print("Enter the number of Employees you want to add :- ");
                     int n = sc.nextInt();
                     for (int i = 0; i < n; i++) {
-                        System.out.print("Enter the Employee " + (i + 1)+ " id :- ");
+                        System.out.print("Enter the Employee " + (i + 1) + " id :- ");
                         int id = sc.nextInt();
                         sc.nextLine();
-                        System.out.print("Enter the Employee " + (i + 1)+ " name :- ");
+                        System.out.print("Enter the Employee " + (i + 1) + " name :- ");
                         String name = sc.nextLine();
-                        System.out.print("Enter the Employee " + (i + 1)+ " Hourly rate :- ");
+                        System.out.print("Enter the Employee " + (i + 1) + " Hourly rate :- ");
                         Double hourlyRate = sc.nextDouble();
                         System.out.println("Enter the worked hours for the week : ");
                         ArrayList<Double> workedHours = new ArrayList<>();
-                        for (int j = 0 ; j < 7 ; j++){
+                        for (int j = 0; j < 7; j++) {
                             System.out.print("Enter the worked hours for day " + (j + 1) + " :- ");
                             double hours = sc.nextDouble();
                             workedHours.add(hours);
                         }
 
-                        new Employee(id,name,hourlyRate,workedHours);
+                        new Employee(id, name, hourlyRate, workedHours);
                     }
                     break;
 
@@ -141,11 +142,12 @@ public class Main {
                     System.out.print("Enter your id to check the total hours :- ");
                     int id = sc.nextInt();
                     Employee emp = Employee.getEmployeesList().get(id);
-                    if(emp == null){
+                    if (emp == null) {
                         System.out.println("Employee not found....");
                         break;
                     }
-                    System.out.println("Total number of worked hours in the week are " + emp.calculateTotalHours(emp.getWorkedHours()));
+                    System.out.println("Total number of worked hours in the week are "
+                            + emp.calculateTotalHours(emp.getWorkedHours()));
 
                     break;
 
@@ -154,12 +156,12 @@ public class Main {
                     System.out.print("Enter your id to check your weekly pay :- ");
                     int e_id = sc.nextInt();
                     Employee e = Employee.getEmployeesList().get(e_id);
-                    if(e == null){
+                    if (e == null) {
                         System.out.println("Employee not found....");
                         break;
                     }
                     double totalHours = e.calculateTotalHours(e.getWorkedHours());
-                    System.out.println("Your weekly pay is " + e.calculateWeeklyPay(totalHours,e.getHourlyRate()));
+                    System.out.println("Your weekly pay is " + e.calculateWeeklyPay(totalHours, e.getHourlyRate()));
                     break;
 
                 case 4:
@@ -167,12 +169,12 @@ public class Main {
                     System.out.print("Enter your id to generate the pay stub :- ");
                     int emp_id = sc.nextInt();
                     Employee employee = Employee.getEmployeesList().get(emp_id);
-                    if(employee == null){
+                    if (employee == null) {
                         System.out.println("Employee not found....");
                         break;
                     }
                     double total_Hours = employee.calculateTotalHours(employee.getWorkedHours());
-                    System.out.println(employee.generatePayStub(total_Hours,employee.getHourlyRate()));
+                    System.out.println(employee.generatePayStub(employee, total_Hours, employee.getHourlyRate()));
                     break;
                 case 5:
                     System.out.println("Exit...");
@@ -184,6 +186,6 @@ public class Main {
 
             }
 
-        }while (val != 5);
+        } while (val != 5);
     }
 }
